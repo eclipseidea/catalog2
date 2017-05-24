@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import zab.romik.entity.Counrty;
 
 /**
+ * CountryDAO
+ *
  * @since 0.0.1
  */
 public interface CountryDao extends JpaRepository<Counrty, Integer> {
