@@ -21,13 +21,13 @@ public class ProductToPropertiesServiceImpl implements ProductToPropertiesServic
     }
 
     @Override
-    public Categories findOne(int id) {
+    public Categories findOne(long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         // TODO Auto-generated method stub
 
     }

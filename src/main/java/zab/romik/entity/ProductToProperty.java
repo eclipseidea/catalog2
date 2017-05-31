@@ -1,64 +1,41 @@
 package zab.romik.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
+@ToString
+@EqualsAndHashCode
 @Entity
 public class ProductToProperty {
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+    @Getter
+    @Setter
     @OneToOne(cascade = CascadeType.ALL)
     private Properties propertyID;
+    @Getter
+    @Setter
     @OneToOne(cascade = CascadeType.ALL)
-    private Valuess valueID;
+    private Value valueID;
+    @Getter
+    @Setter
     @ManyToOne
     private Commodity commodity;
 
     public ProductToProperty() {
     }
 
-    public ProductToProperty(Properties propertyID, Valuess valueID, Commodity commodity) {
+    public ProductToProperty(final Properties propertyID, final Value valueID,final Commodity commodity) {
         super();
         this.propertyID = propertyID;
         this.valueID = valueID;
         this.commodity = commodity;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Properties getPropertyID() {
-        return propertyID;
-    }
-
-    public void setPropertyID(Properties propertyID) {
-        this.propertyID = propertyID;
-    }
-
-    public Valuess getValueID() {
-        return valueID;
-    }
-
-    public void setValueID(Valuess valueID) {
-        this.valueID = valueID;
-    }
-
-    public Commodity getCommodity() {
-        return commodity;
-    }
-
-    public void setCommodity(Commodity commodity) {
-        this.commodity = commodity;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductToProperty [id=" + id + ", propertyID=" + propertyID + ", valueID=" + valueID + ", commodity="
-                + commodity + "]";
     }
 }

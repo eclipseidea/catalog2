@@ -2,7 +2,7 @@ package zab.romik.serviceImpl;
 
 import org.springframework.stereotype.Service;
 import zab.romik.entity.Categories;
-import zab.romik.entity.Valuess;
+import zab.romik.entity.Value;
 import zab.romik.service.ValueService;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ValueServiceImpl implements ValueService {
 
     @Override
-    public void save(Valuess value) {
+    public void save(Value value) {
         // TODO Auto-generated method stub
 
     }
@@ -22,19 +22,19 @@ public class ValueServiceImpl implements ValueService {
     }
 
     @Override
-    public Categories findOne(int id) {
+    public Categories findOne(long id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void update(Valuess value) {
+    public void update(Value value) {
         // TODO Auto-generated method stub
 
     }

@@ -1,18 +1,19 @@
 package zab.romik.service;
 
-import zab.romik.entity.Counrty;
+
+import zab.romik.entity.Country;
 
 import java.util.List;
 
 public interface CountryService {
 
-    void save(Counrty country);
+    void save(Country country);
 
-    List<Counrty> findAll();
+    List<Country> findAll();
 
-    Counrty findOne(int id);
+    Country findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
-    void update(Counrty country);
+    void update(Country country);
 }

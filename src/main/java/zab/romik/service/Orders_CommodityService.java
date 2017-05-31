@@ -10,9 +10,9 @@ public interface Orders_CommodityService {
 
     List<Orders_Commodity> findAll();
 
-    Orders_Commodity findOne(int id);
+    Orders_Commodity findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(Orders_Commodity orders_Commodity);
 

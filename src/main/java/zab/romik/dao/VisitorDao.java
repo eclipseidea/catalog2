@@ -6,5 +6,5 @@ import zab.romik.entity.Visitor;
 /**
  * Created by user on 05/24/2017.
  */
-public interface VisitorDao extends JpaRepository<Visitor,Integer> {
+public interface VisitorDao extends JpaRepository<Visitor,Long> {
 }

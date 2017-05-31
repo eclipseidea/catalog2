@@ -13,9 +13,9 @@ public interface VisitorService {
 
     List<Visitor> findAll();
 
-    Visitor findOne(int id);
+    Visitor findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(Visitor visitor);
 

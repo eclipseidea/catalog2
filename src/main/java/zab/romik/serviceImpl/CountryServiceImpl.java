@@ -3,7 +3,7 @@ package zab.romik.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zab.romik.dao.CountryDao;
-import zab.romik.entity.Counrty;
+import zab.romik.entity.Country;
 import zab.romik.service.CountryService;
 
 import java.util.List;
@@ -15,29 +15,27 @@ public class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryDao countryDao;
 
+    private Country country;
 
-    public void save(Counrty country) {
+
+    public void save(Country country) {
         countryDao.save(country);
 
     }
 
-
-    public List<Counrty> findAll() {
+    public List<Country> findAll() {
         return countryDao.findAll();
     }
 
-
-    public Counrty findOne(int id) {
+    public Country findOne(long id) {
         return countryDao.findOne(id);
     }
 
-
-    public void delete(int id) {
+    public void delete(long id) {
         countryDao.delete(id);
     }
 
-
-    public void update(Counrty country) {
+    public void update(Country country) {
         countryDao.save(country);
 
     }

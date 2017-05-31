@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by user on 05/24/2017.
  */
-public class VisitorSerrviceImpl implements VisitorService {
+public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public void save(Visitor visitor) {
@@ -22,12 +22,12 @@ public class VisitorSerrviceImpl implements VisitorService {
     }
 
     @Override
-    public Visitor findOne(int id) {
+    public Visitor findOne(long id) {
         return null;
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 

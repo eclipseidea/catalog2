@@ -22,11 +22,11 @@ public class Orders_CommodityServiceImpl implements Orders_CommodityService {
         return Orders_ComodityDao.findAll();
     }
 
-    public Orders_Commodity findOne(int id) {
+    public Orders_Commodity findOne(long id) {
         return Orders_ComodityDao.findOne(id);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         Orders_ComodityDao.delete(id);
     }
 

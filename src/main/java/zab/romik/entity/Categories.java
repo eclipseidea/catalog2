@@ -1,46 +1,40 @@
 package zab.romik.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Categories {
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+    @Getter
+    @Setter
     private int parrentId;
+    @Getter
+    @Setter
     private String name;
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
     private List<Commodity> commodity = new ArrayList<Commodity>();
 
-    public Long getId() {
-        return id;
+    public Categories() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getParrentId() {
-        return parrentId;
-    }
-
-    public void setParrentId(int parrentId) {
+    public Categories(int parrentId, String name) {
         this.parrentId = parrentId;
-    }
-
-    @Override
-    public String toString() {
-        return "Categories [id=" + id + ", name=" + name + ", parrentId=" + parrentId + "]";
+        this.name = name;
     }
 }
 

@@ -11,9 +11,9 @@ public interface PropertiesService {
 
     List<Categories> findAll();
 
-    Categories findOne(int id);
+    Categories findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(Properties properties);
 }

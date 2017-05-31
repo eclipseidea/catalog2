@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface UserService {
 
-    void save(User user);
+    void save(User user) throws Exception;
 
     List<User> findAll();
 
-    User findOne(int id);
+    User findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(User user);
 

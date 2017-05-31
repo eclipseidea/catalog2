@@ -1,19 +1,19 @@
 package zab.romik.service;
 
 import zab.romik.entity.Categories;
-import zab.romik.entity.Valuess;
+import zab.romik.entity.Value;
 
 import java.util.List;
 
 public interface ValueService {
 
-    void save(Valuess value);
+    void save(Value value);
 
     List<Categories> findAll();
 
-    Categories findOne(int id);
+    Categories findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
-    void update(Valuess value);
+    void update(Value value);
 }

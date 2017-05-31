@@ -10,9 +10,9 @@ public interface CommodityService {
 
     List<Commodity> findAll();
 
-    Commodity findOne(int id);
+    Commodity findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(Commodity commodity);
 }

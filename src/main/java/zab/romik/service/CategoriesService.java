@@ -5,13 +5,14 @@ import zab.romik.entity.Categories;
 import java.util.List;
 
 public interface CategoriesService {
-    void save(Categories categiries);
+
+    void save(Categories categories);
 
     List<Categories> findAll();
 
-    Categories findOne(int id);
+    Categories findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
-    void update(Categories categiries);
+    void update(Categories categories);
 }

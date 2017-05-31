@@ -14,24 +14,24 @@ public class CategoriesServiceImpl implements CategoriesService {
     @Autowired
     private CategoriesDao categoriesDao;
 
-    public void save(Categories categiries) {
-        categoriesDao.save(categiries);
+    public void save(Categories categories) {
+        categoriesDao.save(categories);
     }
 
     public List<Categories> findAll() {
         return categoriesDao.findAll();
     }
 
-    public Categories findOne(int id) {
+    public Categories findOne(long id) {
         return categoriesDao.findOne(id);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         categoriesDao.delete(id);
     }
 
-    public void update(Categories categiries) {
-        categoriesDao.save(categiries);
+    public void update(Categories categories) {
+        categoriesDao.save(categories);
     }
 
 }

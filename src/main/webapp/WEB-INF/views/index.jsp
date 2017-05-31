@@ -7,9 +7,9 @@
     <title>Insert title here</title>
 </head>
 <body>
-<h1 style="text-align: center;">home</h1>
-
-<a href="/signup">sign up</a>
+<h1 style="text-align: center;">admin</h1>
+<a href="/user">add user</a>
+<a href="/commodity">add product</a>
 
 </body>
 </html>

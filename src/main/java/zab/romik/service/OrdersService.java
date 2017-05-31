@@ -11,9 +11,9 @@ public interface OrdersService {
 
     List<Orders> findAll();
 
-    Orders findOne(int id);
+    Orders findOne(long id);
 
-    void delete(int id);
+    void delete(long id);
 
     void update(Orders order);
 

@@ -6,13 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Properties {
+public class Value {
     @Getter
     @Setter
     @Id
@@ -20,17 +18,18 @@ public class Properties {
     private long id;
     @Getter
     @Setter
-    @OneToMany(mappedBy = "properties", cascade = CascadeType.REMOVE)
-    private List<Value> value = new ArrayList<Value>();
+    @ManyToOne
+    private Properties properties;
     @Getter
     @Setter
-    private String title;
+    private String value;
 
-    public Properties() {
+    public Value() {
     }
 
-    public Properties(final String title) {
+    public Value(final Properties properties,final String value) {
         super();
-        this.title = title;
+        this.properties = properties;
+        this.value = value;
     }
 }

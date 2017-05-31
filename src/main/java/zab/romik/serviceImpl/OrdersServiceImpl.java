@@ -28,12 +28,12 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
 
-    public Orders findOne(int id) {
+    public Orders findOne(long id) {
         return ordersDao.findOne(id);
     }
 
 
-    public void delete(int id) {
+    public void delete(long id) {
         ordersDao.delete(id);
     }
 

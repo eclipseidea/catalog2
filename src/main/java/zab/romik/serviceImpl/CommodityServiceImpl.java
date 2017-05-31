@@ -14,22 +14,22 @@ public class CommodityServiceImpl implements CommodityService {
     @Autowired
     private CommodityDao commodityDao;
 
-    public void save(Commodity commodity) {
-        commodityDao.save(commodity);
 
+    public void save(Commodity commodity) {
+
+        commodityDao.save(commodity);
     }
 
     public List<Commodity> findAll() {
         return commodityDao.findAll();
     }
 
-    public Commodity findOne(int id) {
+    public Commodity findOne(long id) {
         return commodityDao.findOne(id);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         commodityDao.delete(id);
-
     }
 
     public void update(Commodity commodity) {

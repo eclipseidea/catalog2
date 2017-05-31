@@ -1,122 +1,60 @@
 package zab.romik.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@ToString
+@EqualsAndHashCode
 @Entity
 public class User {
-
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "user")
     private Set<Visitor> visitor = new HashSet<Visitor>();
+    @Getter
+    @Setter
     private String name;
+    @Getter
+    @Setter
     private String email;
+    @Getter
+    @Setter
     private String country;
+    @Getter
+    @Setter
     private String region;
+    @Getter
+    @Setter
     private String city;
+    @Getter
+    @Setter
     private String street;
+    @Getter
+    @Setter
     private String numberOfPone;
-
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "user")
     private List<Orders> orders;
 
     public User() {
     }
 
-
-    public User(String name, String email) {
+    public User(final String name,final String email) {
         super();
         this.name = name;
         this.email = email;
-    }
-
-    public Set<Visitor> getVisitor() {
-        return visitor;
-    }
-
-    public void setVisitor(Set<Visitor> visitor) {
-        this.visitor = visitor;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getNumberOfPone() {
-        return numberOfPone;
-    }
-
-    public void setNumberOfPone(String numberOfPone) {
-        this.numberOfPone = numberOfPone;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Orders> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Orders> orders) {
-        this.orders = orders;
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", country=" + country + ", region=" + region
-                + ", city=" + city + ", street=" + street + ", numberOfPone=" + numberOfPone + "]";
     }
 }
