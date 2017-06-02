@@ -8,14 +8,54 @@
          http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <import resource="apContext.xml"/>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/views/</value>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/static/**" location="/static/" />
+
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <constructor-arg ref="servletContext"/>
+        <property name="prefix" value="/WEB-INF/thymeleaf/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <!-- Template cache is set to false (default is true). -->
+        <property name="cacheable" value="false" />
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="additionalDialects">
+            <set>
+                <bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
+            </set>
         </property>
-        <property name="suffix">
-            <value>.jsp</value>
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <!--
+      // Setup a simple strategy:
+      //  1. Only path extension is taken into account, Accept headers
+      //      are ignored.
+      //  2. Return HTML by default when not sure.
+      -->
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="text/html" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="cnManager"/>
+        <property name="viewResolvers">
+            <list>
+                <!-- Used here for 'xml' and 'atom' views  -->
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+                    <property name="order" value="1"/>
+                </bean>
+                <!-- Used for Thymeleaf views  -->
+                <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+                    <property name="templateEngine" ref="templateEngine" />
+                    <property name="order" value="2"/>
+                </bean>
+            </list>
         </property>
     </bean>
-    <mvc:annotation-driven/>
 
 </beans>
