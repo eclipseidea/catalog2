@@ -10,15 +10,14 @@
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://localhost/Catalog?createDatabaseIfNotExist=true"/>
+                      value="jdbc:mysql://localhost/Catalog2?characterEncoding=utf-8&amp;useUnicode=true"/>
+
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="root"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.connection.CharSet" value="utf8"/>
-            <property name="hibernate.connection.characterEncoding" value="utf8"/>
-            <property name="hibernate.connection.useUnicode" value="true"/>
+
             <property name="hibernate.connection.provider_class"
                       value="com.zaxxer.hikari.hibernate.HikariConnectionProvider"/>
             <property name="hibernate.hikari.minimumIdle" value="20"/>

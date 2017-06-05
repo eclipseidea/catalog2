@@ -16,6 +16,7 @@
         <constructor-arg ref="servletContext"/>
         <property name="prefix" value="/WEB-INF/thymeleaf/" />
         <property name="suffix" value=".html" />
+        <property name="characterEncoding" value="UTF-8" />
         <property name="templateMode" value="HTML5" />
         <!-- Template cache is set to false (default is true). -->
         <property name="cacheable" value="false" />
