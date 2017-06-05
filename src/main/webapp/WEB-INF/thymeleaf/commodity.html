@@ -2,14 +2,16 @@
 
            <div layout:decorate="~{layouts/layout}" layout:fragment="content" xmlns:form="http://www.w3.org/1999/html"
                 xmlns:layout="http://www.w3.org/1999/xhtml">
-   <form action="/commodity"  path="commodity" method="post" accept-charset="UTF-8">
+               <form formaction="/commodity" method="post" accept-charset="UTF-8" path="commodity">
+                   <fieldset path="commodity">
        <input id="commodityName"     placeholder="name"        type="text" >
        <input id="commodityPrice"    placeholder="price"       type="text">
        <input id="commodityGender"   placeholder="description" type="text">
        <input id="commodityAge"      placeholder="age"         type="number" >
        <input id="commodityQuantity" placeholder="quantity"    type="number">
        <input id="commodityCategory" placeholder="category"    type="search">
-       <button>save</button>
+                       <input type="submit">
+                   </fieldset>
    </form>
                <br>
                <br>
