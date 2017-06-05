@@ -1,0 +1,29 @@
+           <!--form for adding new commodities-->
+
+           <div layout:decorate="~{layouts/layout}" layout:fragment="content" xmlns:form="http://www.w3.org/1999/html"
+                xmlns:layout="http://www.w3.org/1999/xhtml">
+   <form action="commodity.html"  path="commodity" method="post" accept-charset="UTF-8">
+       <input id="commodityName"     placeholder="name"        type="text" >
+       <input id="commodityPrice"    placeholder="price"       type="text">
+       <input id="commodityGender"   placeholder="description" type="text">
+       <input id="commodityAge"      placeholder="age"         type="number" >
+       <input id="commodityQuantity" placeholder="quantity"    type="number">
+       <input id="commodityCategory" placeholder="category"    type="search">
+       <button>save</button>
+   </form>
+               <br>
+               <br>
+               <table style="align-content: center" border="5px" width="100%" >
+                   <tr data-th-each="commodity : ${commodities}">
+                       <td data-th-text="${commodity.name}" width="12px">...</td>
+                       <td data-th-text="${commodity.price}" width="12px">...</td>
+                       <td data-th-text="${commodity.gender}" width="12px">...</td>
+                       <td data-th-text="${commodity.description}"width="12px">...</td>
+                       <td data-th-text="${commodity.age}"width="12px">...</td>
+                       <td data-th-text="${commodity.quantity}"width="12px">...</td>
+                       <td data-th-text= "${commodity.categories}" width="12px"></td>
+                   </tr>
+               </table>
+
+
+           </div>
