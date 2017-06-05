@@ -1,31 +1,30 @@
-           <!--form for adding new commodities-->
+<!--form for adding new commodities-->
 
-           <div layout:decorate="~{layouts/layout}" layout:fragment="content" xmlns:form="http://www.w3.org/1999/html"
-                xmlns:layout="http://www.w3.org/1999/xhtml">
-               <form formaction="/commodity" method="post" accept-charset="UTF-8" path="commodity">
-                   <fieldset path="commodity">
-       <input id="commodityName"     placeholder="name"        type="text" >
-       <input id="commodityPrice"    placeholder="price"       type="text">
-       <input id="commodityGender"   placeholder="description" type="text">
-       <input id="commodityAge"      placeholder="age"         type="number" >
-       <input id="commodityQuantity" placeholder="quantity"    type="number">
-       <input id="commodityCategory" placeholder="category"    type="search">
-                       <input type="submit">
-                   </fieldset>
-   </form>
-               <br>
-               <br>
-               <table style="align-content: center" border="5px" width="100%" >
-                   <tr data-th-each="commodity : ${commodities}">
-                       <td data-th-text="${commodity.name}" width="12px">...</td>
-                       <td data-th-text="${commodity.price}" width="12px">...</td>
-                       <td data-th-text="${commodity.gender}" width="12px">...</td>
-                       <td data-th-text="${commodity.description}"width="12px">...</td>
-                       <td data-th-text="${commodity.age}"width="12px">...</td>
-                       <td data-th-text="${commodity.quantity}"width="12px">...</td>
-                       <td data-th-text= "${commodity.categories}" width="12px"></td>
-                   </tr>
-               </table>
+<div layout:decorate="~{layouts/layout}" layout:fragment="content"
+     xmlns:layout="http://www.w3.org/1999/xhtml">
+    <form action="#" th:action="@{/commodity}" method="post" th:object="${commodity}">
+        <fieldset>
+            <input id="commodityName" placeholder="name" type="text" th:field="*{name}">
+            <input id="commodityPrice" placeholder="price" type="text" th:field="*{price}">
+            <input id="commodityGender" placeholder="description" type="text" th:field="*{description}">
+            <input id="commodityAge" placeholder="age" type="number" th:field="*{age}">
+            <input id="commodityQuantity" placeholder="quantity" type="number" th:field="*{quantity}">
+        </fieldset>
+        <button name="save" type="submit">Save</button>
+    </form>
+    <br>
+    <br>
+    <table style="align-content: center" border="5px" width="100%">
+        <tr data-th-each="commodity : ${commodities}">
+            <td data-th-text="${commodity.name}" width="12px">...</td>
+            <td data-th-text="${commodity.price}" width="12px">...</td>
+            <td data-th-text="${commodity.gender}" width="12px">...</td>
+            <td data-th-text="${commodity.description}" width="12px">...</td>
+            <td data-th-text="${commodity.age}" width="12px">...</td>
+            <td data-th-text="${commodity.quantity}" width="12px">...</td>
+            <td data-th-text="${commodity.categories}" width="12px"></td>
+        </tr>
+    </table>
 
 
-           </div>
+</div>
