@@ -25,15 +25,6 @@ public class CommodityServiceImpl implements CommodityService {
         this.categoriesDao = Objects.requireNonNull(categoriesDao);
     }
 
-    private CategoriesDao getCategoriesDao() {
-        return categoriesDao;
-    }
-
-    @Autowired
-    public void setCategoriesDao(CategoriesDao categoriesDao) {
-        this.categoriesDao = categoriesDao;
-    }
-
     /**
      * Создает товар исходя из формы которую отсылает пользователь.
      *
