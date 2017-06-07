@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import zab.romik.entity.Country;
 import zab.romik.enums.CommodityGender;
 
 import javax.validation.constraints.Min;
@@ -84,4 +85,11 @@ public class CommodityForm implements Serializable {
     @Getter
     @Setter
     private CommodityGender gender;
+
+
+    @Getter
+    @Setter
+    private Country country;
+
+
 }

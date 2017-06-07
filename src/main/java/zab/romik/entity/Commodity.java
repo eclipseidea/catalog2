@@ -40,16 +40,21 @@ public class Commodity {
     @Getter
     @Setter
     private BigDecimal price;
+
     @Getter
     @Setter
     private int quantity;
+
     @Getter
     @Setter
+    @Column(columnDefinition = "text")
     private String description;
+
     @Getter
     @Setter
     @OneToMany(mappedBy = "commodity", cascade = CascadeType.REMOVE)
     private List<Orders_Commodity> orders_Commodity = new ArrayList<Orders_Commodity>();
+
     @Getter
     @Setter
     @OneToMany(mappedBy = "commodity", cascade = CascadeType.REMOVE)
@@ -80,9 +85,10 @@ public class Commodity {
      *
      * @param form       Форма из которой будет заполняться сущность
      * @param categories Категория которую надо заинжектить в товар
+     * @param countries
      * @return Заполненная сущность
      */
-    public static Commodity valueOf(final CommodityForm form, final Categories categories) {
+    public static Commodity valueOf(final CommodityForm form, final Categories categories, Country countries) {
         final Commodity commodity = new Commodity(form.getName(), form.getPrice());
 
         commodity.setAge(form.getRecommendationAge());
@@ -90,7 +96,7 @@ public class Commodity {
         commodity.setQuantity(form.getQuantity());
         commodity.setCategories(categories);
         commodity.setGender(form.getGender());
-
+        commodity.setCountry(countries);
         return commodity;
     }
 }

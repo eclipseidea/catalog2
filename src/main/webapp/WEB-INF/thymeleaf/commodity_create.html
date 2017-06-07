@@ -1,5 +1,5 @@
 <!-- Add commodity page -->
-<div layout:decorate="~{layouts/layout}" layout:fragment="content">
+<div layout:decorate="~{layouts/layout}" layout:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="page-title">
         <h3>Добавить новый товар</h3>
         <small>На этой странице вы можете добавить новый товар в магазин</small>
@@ -99,6 +99,21 @@
                         </select>
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('gender')}">
                             <p th:errors="*{gender}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="countries" class="col-sm-3 control-label">Страна производитель *</label>
+                    <div class="col-sm-9">
+                        <select name="countries" id="countries" th:field="*{countryId}" class="form-control">
+                            <option value="">Выберите страну</option>
+                            <option th:each="cant : ${countries}"
+                                    th:value="${cant.id}"
+                                    th:text="${cant.name}"></option>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('categoryId')}">
+                            <p th:errors="*{categoryId}"></p>
                         </div>
                     </div>
                 </div>

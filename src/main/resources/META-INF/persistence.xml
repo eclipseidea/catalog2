@@ -10,7 +10,7 @@
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://localhost/Catalog2?characterEncoding=utf-8&amp;useUnicode=true"/>
+                      value="jdbc:mysql://localhost/Catalog?characterEncoding=utf-8&amp;useUnicode=true"/>
 
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="root"/>

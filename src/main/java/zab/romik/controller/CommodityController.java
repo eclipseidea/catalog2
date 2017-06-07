@@ -14,6 +14,7 @@ import zab.romik.enums.CommodityGender;
 import zab.romik.forms.CommodityForm;
 import zab.romik.service.CategoriesService;
 import zab.romik.service.CommodityService;
+import zab.romik.service.CountryService;
 
 import javax.validation.Valid;
 
@@ -61,16 +62,23 @@ public class CommodityController {
     private final CategoriesService categoriesService;
 
     /**
+     * Cервис для работы со странами производителями
+     */
+    private final CountryService countryService;
+
+    /**
      * Конструктор для внедрения зависимостей
-     *
-     * @param commodityService  Сервис для работы с товарами
+     *  @param commodityService  Сервис для работы с товарами
      * @param categoriesService Сервис для работы с категориями
+     * @param countryService
      */
     @Autowired
     public CommodityController(final CommodityService commodityService,
-                               final CategoriesService categoriesService) {
+                               final CategoriesService categoriesService,
+                               final CountryService countryService) {
         this.commodityService = commodityService;
         this.categoriesService = categoriesService;
+        this.countryService = countryService;
     }
 
     /**
@@ -100,7 +108,7 @@ public class CommodityController {
         }
         model.addAttribute("categories", categoriesService.findAll());
         model.addAttribute("genders", CommodityGender.values());
-
+        model.addAttribute("country", countryService.findAll());
         return CREATE_COMMODITY_VIEW_NAME;
     }
 
@@ -115,7 +123,9 @@ public class CommodityController {
      * с ошибками валидации
      */
     @PostMapping(COMMODITY_CREATE_ENDPOINT)
-    public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE) @Valid final CommodityForm commodity,
+    public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE)
+                                      @Valid
+                                      final CommodityForm commodity,
                                       final BindingResult bindingResult,
                                       final RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
