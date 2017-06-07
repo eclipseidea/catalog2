@@ -20,8 +20,9 @@ public class CommodityServiceImpl implements CommodityService {
     private CategoriesDao categoriesDao;
 
     @Autowired
-    public CommodityServiceImpl(final CommodityDao commodityDao) {
+    public CommodityServiceImpl(final CommodityDao commodityDao, final CategoriesDao categoriesDao) {
         this.commodityDao = commodityDao;
+        this.categoriesDao = Objects.requireNonNull(categoriesDao);
     }
 
     private CategoriesDao getCategoriesDao() {
@@ -40,10 +41,7 @@ public class CommodityServiceImpl implements CommodityService {
      */
     @Override
     public void save(final CommodityForm form) {
-        if (getCategoriesDao() == null) {
-            throw new IllegalStateException("Categories dao must be initialized!");
-        }
-        final Categories category = getCategoriesDao().findOne(form.getCategoryId());
+        final Categories category = categoriesDao.findOne(form.getCategoryId());
         Objects.requireNonNull(category, "Category with id = " + form.getCategoryId() + " not found!");
 
         commodityDao.save(Commodity.valueOf(form, category));
