@@ -113,7 +113,7 @@ public class CommodityController {
      * с ошибками валидации
      */
     @PostMapping(COMMODITY_CREATE_ENDPOINT)
-    public String processNewCommodity(@ModelAttribute(value = COMMODITY_MODEL_ATTRIBUTE) @Valid final CommodityForm commodity,
+    public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE) @Valid final CommodityForm commodity,
                                       final BindingResult bindingResult,
                                       final RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
