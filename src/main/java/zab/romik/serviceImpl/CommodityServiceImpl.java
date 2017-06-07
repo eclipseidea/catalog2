@@ -2,22 +2,51 @@ package zab.romik.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import zab.romik.dao.CategoriesDao;
 import zab.romik.dao.CommodityDao;
+import zab.romik.entity.Categories;
 import zab.romik.entity.Commodity;
+import zab.romik.forms.CommodityForm;
 import zab.romik.service.CommodityService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CommodityServiceImpl implements CommodityService {
 
+    /** DAO для работы с товарами */
+    private final CommodityDao commodityDao;
+    private CategoriesDao categoriesDao;
+
     @Autowired
-    private CommodityDao commodityDao;
+    public CommodityServiceImpl(final CommodityDao commodityDao) {
+        this.commodityDao = commodityDao;
+    }
 
+    private CategoriesDao getCategoriesDao() {
+        return categoriesDao;
+    }
 
-    public void save(Commodity commodity) {
+    @Autowired
+    public void setCategoriesDao(CategoriesDao categoriesDao) {
+        this.categoriesDao = categoriesDao;
+    }
 
-        commodityDao.save(commodity);
+    /**
+     * Создает товар исходя из формы которую отсылает пользователь.
+     *
+     * @param form Форма с данными товара который нужно создать
+     */
+    @Override
+    public void save(final CommodityForm form) {
+        if (getCategoriesDao() == null) {
+            throw new IllegalStateException("Categories dao must be initialized!");
+        }
+        final Categories category = getCategoriesDao().findOne(form.getCategoryId());
+        Objects.requireNonNull(category, "Category with id = " + form.getCategoryId() + " not found!");
+
+        commodityDao.save(Commodity.valueOf(form, category));
     }
 
     public List<Commodity> findAll() {

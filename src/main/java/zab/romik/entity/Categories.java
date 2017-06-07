@@ -18,22 +18,25 @@ public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Getter
     @Setter
-    private int parrentId;
+    @OneToOne
+    private Categories parent;
+
     @Getter
     @Setter
     private String name;
+
     @Getter
     @Setter
-    @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
+    @OneToMany
     private List<Commodity> commodity = new ArrayList<Commodity>();
 
     public Categories() {
     }
 
-    public Categories(int parrentId, String name) {
-        this.parrentId = parrentId;
+    public Categories(String name) {
         this.name = name;
     }
 }

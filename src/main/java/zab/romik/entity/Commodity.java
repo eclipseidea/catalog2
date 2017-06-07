@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import zab.romik.forms.CommodityForm;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -26,9 +27,15 @@ public class Commodity {
     @Getter
     @Setter
     private int age;
+
+    /**
+     * Рекомендуемый пол для покупателя товара
+     */
     @Getter
     @Setter
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private CommodityGender gender = CommodityGender.UNIVERSAL;
+
     @Getter
     @Setter
     private BigDecimal price;
@@ -46,10 +53,12 @@ public class Commodity {
     @Setter
     @OneToMany(mappedBy = "commodity", cascade = CascadeType.REMOVE)
     private List<ProductToProperty> productToProperties = new ArrayList<ProductToProperty>();
+
     @Getter
     @Setter
-    @ManyToOne
+    @OneToOne
     private Categories categories;
+
     @Getter
     @Setter
     @ManyToOne
@@ -62,5 +71,53 @@ public class Commodity {
         super();
         this.name = name;
         this.price = price;
+    }
+
+    /**
+     * Статический метод генерации (как рекомендуется в книге Effective Java),
+     * заполняет сущность Commodity из формы пользователя.
+     *
+     * @param form       Форма из которой будет заполняться сущность
+     * @param categories Категория которую надо заинжектить в товар
+     * @return Заполненная сущность
+     */
+    public static Commodity valueOf(final CommodityForm form, final Categories categories) {
+        final Commodity commodity = new Commodity(form.getName(), form.getPrice());
+
+        commodity.setAge(form.getRecommendationAge());
+        commodity.setDescription(form.getDescription());
+        commodity.setQuantity(form.getQuantity());
+        commodity.setCategories(categories);
+
+        return commodity;
+    }
+
+    /**
+     * Это перечесление обозначает пол рекомендуемый для покупателя
+     * товара
+     * <p>
+     * - Мужской
+     * - Женский
+     *
+     * @since 0.0.1
+     */
+    enum CommodityGender {
+        MALE("Мужской"),
+        FEMALE("Женский"),
+        UNIVERSAL("Универсальный");
+
+        /**
+         * Расшифровка, чтобы можно было вывести нормальное название
+         * внутри шаблона на странице
+         */
+        private final String name;
+
+        CommodityGender(final String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }
