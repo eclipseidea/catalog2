@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import zab.romik.entity.Commodity;
+import zab.romik.enums.CommodityGender;
 import zab.romik.forms.CommodityForm;
 import zab.romik.service.CategoriesService;
 import zab.romik.service.CommodityService;
@@ -98,6 +99,7 @@ public class CommodityController {
             model.addAttribute(COMMODITY_MODEL_ATTRIBUTE, new CommodityForm());
         }
         model.addAttribute("categories", categoriesService.findAll());
+        model.addAttribute("genders", CommodityGender.values());
 
         return CREATE_COMMODITY_VIEW_NAME;
     }

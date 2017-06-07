@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import zab.romik.enums.CommodityGender;
 import zab.romik.forms.CommodityForm;
 
 import javax.persistence.*;
@@ -88,36 +89,8 @@ public class Commodity {
         commodity.setDescription(form.getDescription());
         commodity.setQuantity(form.getQuantity());
         commodity.setCategories(categories);
+        commodity.setGender(form.getGender());
 
         return commodity;
-    }
-
-    /**
-     * Это перечесление обозначает пол рекомендуемый для покупателя
-     * товара
-     * <p>
-     * - Мужской
-     * - Женский
-     *
-     * @since 0.0.1
-     */
-    enum CommodityGender {
-        MALE("Мужской"),
-        FEMALE("Женский"),
-        UNIVERSAL("Универсальный");
-
-        /**
-         * Расшифровка, чтобы можно было вывести нормальное название
-         * внутри шаблона на странице
-         */
-        private final String name;
-
-        CommodityGender(final String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 }
