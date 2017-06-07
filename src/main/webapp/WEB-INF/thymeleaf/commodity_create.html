@@ -1,0 +1,98 @@
+<!-- Add commodity page -->
+<div layout:decorate="~{layouts/layout}" layout:fragment="content">
+    <div class="page-title">
+        <h3>Добавить новый товар</h3>
+        <small>На этой странице вы можете добавить новый товар в магазин</small>
+    </div><br><br>
+
+    <div>
+        <form action="#" th:action="@{/commodity/create}" method="post" th:object="${commodity}" class="form-horizontal">
+            <div class="row">
+                <div class="form-group">
+                    <label for="commodityName" class="col-sm-3 control-label">Название *</label>
+                    <div class="col-sm-9">
+                        <input id="commodityName" placeholder="name" type="text" th:field="*{name}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('name')}">
+                            <p th:errors="*{name}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="commodityPrice" class="col-sm-3 control-label">Цена *</label>
+                    <div class="col-sm-9">
+                        <input id="commodityPrice" placeholder="price" type="text" th:field="*{price}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('price')}">
+                            <p th:errors="*{price}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="commodityDescription" class="col-sm-3 control-label">Описание</label>
+                    <div class="col-sm-9">
+                        <textarea id="commodityDescription"
+                                  type="text"
+                                  th:field="*{description}"
+                                  class="form-control">
+
+                        </textarea>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('description')}">
+                            <p th:errors="*{description}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="commodityAge" class="col-sm-3 control-label">Рекомендуемый возраст</label>
+                    <div class="col-sm-9">
+                        <input id="commodityAge" placeholder="age" type="number" th:field="*{recommendationAge}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('recommendationAge')}">
+                            <p th:errors="*{recommendationAge}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="commodityQuantity" class="col-sm-3 control-label">Количество товара *</label>
+                    <div class="col-sm-9">
+                        <input id="commodityQuantity" placeholder="quantity" type="number" th:field="*{quantity}" class="form-control">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('quantity')}">
+                            <p th:errors="*{quantity}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="categories" class="col-sm-3 control-label">Категория *</label>
+                    <div class="col-sm-9">
+                        <select name="categories" id="categories" th:field="*{categoryId}" class="form-control">
+                            <option value="">Выберите категорию</option>
+                            <option th:each="cat : ${categories}"
+                                    th:value="${cat.id}"
+                                    th:text="${cat.name}"></option>
+                        </select>
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('categoryId')}">
+                            <p th:errors="*{categoryId}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3">
+                <button name="save" type="submit" class="btn btn-primary m-md-t w-150">Создать</button>
+                <button type="reset" class="btn btn-grey m-md-t w-150">Очистить форму</button>
+            </div>
+        </form>
+    </div>
+</div>
