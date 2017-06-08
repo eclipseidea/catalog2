@@ -39,9 +39,11 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public void save(final CommodityForm form) {
         final Categories category = categoriesDao.findOne(form.getCategoryId());
-        final Country country = countryDao.findOne(form.getCountry());
+        final Country country = countryDao.findOne(form.getCountryId());
+
         Objects.requireNonNull(category, "Category with id = " + form.getCategoryId() + " not found!");
         Objects.requireNonNull(country);
+
         commodityDao.save(Commodity.valueOf(form, category, country));
     }
 

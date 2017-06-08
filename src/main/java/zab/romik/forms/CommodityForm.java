@@ -86,10 +86,9 @@ public class CommodityForm implements Serializable {
     @Setter
     private CommodityGender gender;
 
-
+    /** Поставщик товаров */
+    @NotNull
     @Getter
     @Setter
-    private Country country;
-
-
+    private Long countryId;
 }

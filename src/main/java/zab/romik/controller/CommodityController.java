@@ -108,7 +108,8 @@ public class CommodityController {
         }
         model.addAttribute("categories", categoriesService.findAll());
         model.addAttribute("genders", CommodityGender.values());
-        model.addAttribute("country", countryService.findAll());
+        model.addAttribute("countries", countryService.findAll());
+
         return CREATE_COMMODITY_VIEW_NAME;
     }
 

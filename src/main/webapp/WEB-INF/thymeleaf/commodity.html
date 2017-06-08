@@ -48,7 +48,7 @@
                         <td data-th-text="${commodity.age + '+'}" width="12px">...</td>
                         <td data-th-text="${commodity.quantity}" width="12px">...</td>
                         <td data-th-text="${commodity.categories != null} ? ${commodity.categories.name} : 'Категория не указана'" width="12px"></td>
-                        <th data-th-text="${commodity.country}"></th>
+                        <td data-th-text="${commodity.country != null} ? ${commodity.country.name} : 'Страна поставщик не указана'"></td>
                     </tr>
                     </tbody>
                 </table>

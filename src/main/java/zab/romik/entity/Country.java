@@ -20,9 +20,10 @@ public class Country {
     @Getter
     @Setter
     private String name;
+
     @Getter
     @Setter
-    @OneToMany(mappedBy = "country", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Commodity> commodities;
 
     public Country() {

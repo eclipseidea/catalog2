@@ -67,7 +67,7 @@ public class Commodity {
 
     @Getter
     @Setter
-    @ManyToOne
+    @OneToOne
     private Country country;
 
     public Commodity() {
@@ -85,7 +85,7 @@ public class Commodity {
      *
      * @param form       Форма из которой будет заполняться сущность
      * @param categories Категория которую надо заинжектить в товар
-     * @param countries
+     * @param countries  Страна поставщик
      * @return Заполненная сущность
      */
     public static Commodity valueOf(final CommodityForm form, final Categories categories, Country countries) {
@@ -97,6 +97,7 @@ public class Commodity {
         commodity.setCategories(categories);
         commodity.setGender(form.getGender());
         commodity.setCountry(countries);
+
         return commodity;
     }
 }
