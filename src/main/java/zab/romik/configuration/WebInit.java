@@ -1,34 +1,53 @@
 package zab.romik.configuration;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.Filter;
 
+public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-public class WebInit implements WebApplicationInitializer {
+    /**
+     * Кодировка приложения, чтобы поддерживать все символы языков
+     */
+    private static final String APP_ENCODING = "UTF-8";
 
+    /**
+     * Кодировать все подряд
+     */
+    private static final boolean IS_FORCE_ENCODING = true;
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-//        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-//        applicationContext.register(DataConfig.class);
-//        applicationContext.setServletContext(servletContext);
-//        DispatcherServlet dispatcherServlet = new DispatcherServlet(applicationContext);
-//        ServletRegistration.Dynamic servlet = servletContext.addServlet("mvc-dispatcher", dispatcherServlet);
-//        servlet.addMapping("/");
-//        servlet.setAsyncSupported(true);
-//        servlet.setLoadOnStartup(1);1
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[]{WebConfig.class, DataConfig.class};
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class[0];
+    }
 
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(WebConfig.class);
-        DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
-        ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcherServlet", dispatcherServlet);
-        registration.setLoadOnStartup(1);
-        registration.setAsyncSupported(true);
-        registration.addMapping("/");
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{
+                new CharacterEncodingFilter(APP_ENCODING, IS_FORCE_ENCODING)
+        };
     }
 }
