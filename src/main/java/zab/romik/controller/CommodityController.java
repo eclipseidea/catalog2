@@ -68,7 +68,8 @@ public class CommodityController {
 
     /**
      * Конструктор для внедрения зависимостей
-     *  @param commodityService  Сервис для работы с товарами
+     *
+     * @param commodityService  Сервис для работы с товарами
      * @param categoriesService Сервис для работы с категориями
      * @param countryService
      */
@@ -125,8 +126,7 @@ public class CommodityController {
      */
     @PostMapping(COMMODITY_CREATE_ENDPOINT)
     public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE)
-                                      @Valid
-                                      final CommodityForm commodity,
+                                      @Valid final CommodityForm commodity,
                                       final BindingResult bindingResult,
                                       final RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
