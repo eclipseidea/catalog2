@@ -1,0 +1,5 @@
+# Конфигурация для подключения к базе данных
+db.datasource.driver=com.mysql.jdbc.Driver
+db.datasource.url=jdbc:mysql://Localhost/Catalog?characterEncoding=utf-8&amp;useUnicode=true
+db.datasource.username=root
+db.datasource.password=root

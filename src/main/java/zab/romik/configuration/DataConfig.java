@@ -1,7 +1,10 @@
 package zab.romik.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -21,7 +24,24 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories("zab.romik.dao")
 @EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class DataConfig {
+
+    /**
+     * Класс который будет нам давать читать свойства из файла
+     * конфигурации с поддержкой окружений
+     */
+    private final Environment env;
+
+    /**
+     * Конструктор для внедрения зависимостей
+     *
+     * @param env Класс для чтения переменных из файла конфигурации
+     */
+    @Autowired
+    public DataConfig(final Environment env) {
+        this.env = env;
+    }
 
     /**
      * Возвращает датасурс из которого осуществялется JDBC подключение
@@ -32,28 +52,13 @@ public class DataConfig {
      */
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://Localhost/Catalog?characterEncoding=utf-8&amp;useUnicode=true");
-        dataSource.setPassword("root");
-        dataSource.setUsername("root");
-        return dataSource;
-    }
+        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-    /**
-     * Возвращает датасурс из которого осуществялется JDBC подключение
-     * <p>
-     * Datasorce for Proweber1.
-     *
-     * @return Класс инкапсулирующий в себе данные для базы
-     */
-    @Bean
-    public DataSource dataSource1() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://127.0.0.1/Catalog?characterEncoding=utf-8&amp;useUnicode=true");
-        dataSource.setPassword("root");
-        dataSource.setUsername("root");
+        dataSource.setDriverClassName(env.getProperty("db.datasource.driver"));
+        dataSource.setUrl(env.getProperty("db.datasource.url"));
+        dataSource.setPassword(env.getProperty("db.datasource.username"));
+        dataSource.setUsername(env.getProperty("db.datasource.password"));
+
         return dataSource;
     }
 
