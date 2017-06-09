@@ -7,11 +7,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -34,6 +32,13 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
      * Папка в которой у нас будут лежать шаблоны системы
      */
     private static final String TEMPLATE_PREFIX = "/WEB-INF/thymeleaf/";
+
+    /**
+     * Кодировка шаблонов
+     *
+     * */
+
+    private static final String ENCODING = "UTF-8";
 
     /**
      * Расшрение файлов для шаблонов внутри системы, мы
@@ -60,13 +65,12 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         final SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-
+        templateResolver.setCharacterEncoding(ENCODING);
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix(TEMPLATE_PREFIX);
         templateResolver.setSuffix(TEMPLATE_SUFFIX);
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(true);
-
         return templateResolver;
     }
 
@@ -81,11 +85,9 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Bean
     public SpringTemplateEngine templateEngine() {
         final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
         templateEngine.addDialect(new LayoutDialect());
-
         return templateEngine;
     }
 
