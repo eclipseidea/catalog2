@@ -16,7 +16,7 @@ public abstract class Routes {
     /**
      * Имя ID аттрибута который будет искаться внутри роута
      */
-    public static final String VALID_ID_ATTRIBUTE = "{id}";
+    private static final String VALID_ID_ATTRIBUTE = "{id}";
 
     /**
      * Все роуты контроллера который занимается товарами
