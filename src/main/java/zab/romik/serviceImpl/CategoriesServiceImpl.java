@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
 
+    private final CategoriesDao categoriesDao;
+
     @Autowired
-    private CategoriesDao categoriesDao;
+    public CategoriesServiceImpl(CategoriesDao categoriesDao) {
+        this.categoriesDao = categoriesDao;
+    }
 
     public void save(Categories categories) {
         categoriesDao.save(categories);

@@ -1,5 +1,6 @@
 package zab.romik.configuration;
 
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -47,7 +48,19 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
     @Override
     protected Filter[] getServletFilters() {
         return new Filter[]{
-                new CharacterEncodingFilter(APP_ENCODING, IS_FORCE_ENCODING)
+                new CharacterEncodingFilter(APP_ENCODING, IS_FORCE_ENCODING),
+                /*
+                Этот фильтр используется для того чтобы исправить ошибку
+                выборки списков связей (LazyFetch) из сущностей в шаблонах.
+
+                Второй вариант исправления это использование EagerFetch, но
+                мы не можем этот вариант использовать, так как он ударит по
+                производительности
+
+                Третий вариант использование аннотации @Transactional, но
+                она у нас не работает
+                 */
+                new OpenEntityManagerInViewFilter()
         };
     }
 }

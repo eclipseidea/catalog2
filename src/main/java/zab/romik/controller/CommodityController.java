@@ -9,14 +9,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import zab.romik.Routes;
+import zab.romik.entity.Categories;
 import zab.romik.entity.Commodity;
+import zab.romik.entity.Country;
 import zab.romik.enums.CommodityGender;
-import zab.romik.forms.CommodityForm;
+import zab.romik.exceptions.ResourceNotFoundException;
 import zab.romik.service.CategoriesService;
 import zab.romik.service.CommodityService;
 import zab.romik.service.CountryService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import java.util.List;
 
 @Controller
 public class CommodityController {
@@ -24,12 +29,7 @@ public class CommodityController {
     /**
      * Имя страницы на которой можно создавать товары
      */
-    private static final String CREATE_COMMODITY_VIEW_NAME = "commodity_create";
-
-    /**
-     * Роут на котором создаются товары в системе
-     */
-    private static final String COMMODITY_CREATE_ENDPOINT = "/commodity/create";
+    private static final String CREATE_COMMODITY_VIEW_NAME = "commodity/commodity_create";
 
     /**
      * Имя атрибута которое содержит в себе форму commodity
@@ -39,12 +39,7 @@ public class CommodityController {
     /**
      * Ключ в сессии для сообщения о том, что товар был успешно создан
      */
-    private static final String COMMODITY_SUCCESS_CREATE_PRODUCT_KEY = "commoditySuccessCreate";
-
-    /**
-     * Сообщение о том, что товар был успешно создан
-     */
-    private static final String COMMODITY_SUCCESS_CREATE_MESSAGE = "Товар успешно добавлен в магазин";
+    private static final String COMMODITY_FLASH_MSG_KEY = "flashMessage";
 
     /**
      * Имя формы которое будет использоваться при редиректе с ошибками, чтобы спринг смог их подхватить
@@ -71,7 +66,7 @@ public class CommodityController {
      *
      * @param commodityService  Сервис для работы с товарами
      * @param categoriesService Сервис для работы с категориями
-     * @param countryService
+     * @param countryService    Сервис для работы с поставщиками
      */
     @Autowired
     public CommodityController(final CommodityService commodityService,
@@ -83,16 +78,47 @@ public class CommodityController {
     }
 
     /**
+     * Глобальная переменная список полов, чтобы не делать дублирования
+     * для того чтобы кидать ее во вьюху.
+     *
+     * @return Список полов
+     */
+    @ModelAttribute("genders")
+    public CommodityGender[] genders() {
+        return CommodityGender.values();
+    }
+
+    /**
+     * Загружает список категорий во вьюхи
+     *
+     * @return Список категорий
+     */
+    @ModelAttribute("categories")
+    public List<Categories> categories() {
+        return categoriesService.findAll();
+    }
+
+    /**
+     * Возвращает список поставщиков из базы данных
+     *
+     * @return Список поставщиков
+     */
+    @ModelAttribute("countries")
+    public List<Country> countries() {
+        return countryService.findAll();
+    }
+
+    /**
      * Страница со списком товаров.
      *
      * @param model Свойства которые будут инжектиться в отображение
      * @return Имя вьюхи которую надо отрендерить
      */
-    @GetMapping("/commodity")
+    @GetMapping(Routes.Commodity.LIST)
     public String Commodity(Model model) {
         model.addAttribute("commodities", commodityService.findAll());
 
-        return "commodity";
+        return "commodity/commodity";
     }
 
     /**
@@ -102,14 +128,11 @@ public class CommodityController {
      * @param model Модель для заполнения страницы данными
      * @return Имя шаблона который надо отрисовать
      */
-    @GetMapping(COMMODITY_CREATE_ENDPOINT)
+    @GetMapping(Routes.Commodity.CREATE)
     public String createNewCommodity(final Model model) {
         if (!model.containsAttribute(COMMODITY_MODEL_ATTRIBUTE)) {
-            model.addAttribute(COMMODITY_MODEL_ATTRIBUTE, new CommodityForm());
+            model.addAttribute(COMMODITY_MODEL_ATTRIBUTE, new Commodity());
         }
-        model.addAttribute("categories", categoriesService.findAll());
-        model.addAttribute("genders", CommodityGender.values());
-        model.addAttribute("countries", countryService.findAll());
 
         return CREATE_COMMODITY_VIEW_NAME;
     }
@@ -124,22 +147,35 @@ public class CommodityController {
      * @return Редирект на страницу со списком товаров или страница создания товара
      * с ошибками валидации
      */
-    @PostMapping(COMMODITY_CREATE_ENDPOINT)
-    public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE)
-                                      @Valid final CommodityForm commodity,
+    @PostMapping(Routes.Commodity.CREATE)
+    public String processNewCommodity(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE) @Valid final Commodity commodity,
                                       final BindingResult bindingResult,
                                       final RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute(COMMODITY_FORM_ERRORS_NAME_FOR_REDIRECT, bindingResult);
             redirectAttributes.addFlashAttribute(COMMODITY_MODEL_ATTRIBUTE, commodity);
 
-            return String.format("redirect:%s", COMMODITY_CREATE_ENDPOINT);
+            return Routes.redirectTo(Routes.Commodity.CREATE);
         }
 
-        redirectAttributes.addFlashAttribute(COMMODITY_SUCCESS_CREATE_PRODUCT_KEY, COMMODITY_SUCCESS_CREATE_MESSAGE);
+        redirectAttributes.addFlashAttribute(COMMODITY_FLASH_MSG_KEY, "Товар успешно добавлен в магазин");
         commodityService.save(commodity);
 
-        return "redirect:/commodity";
+        return Routes.redirectTo(Routes.Commodity.LIST);
+    }
+
+    /**
+     * Загружает товар по ID и отображает его на странице с действиями
+     * удаления и редактирования
+     *
+     * @param id ID товара который надо загрузить
+     * @return Имя страницы для отображения
+     */
+    @GetMapping(Routes.Commodity.SHOW)
+    public String view(final Model model, @PathVariable @Min(1) final long id) {
+        model.addAttribute(COMMODITY_MODEL_ATTRIBUTE, findOrFail(id));
+
+        return "commodity/show";
     }
 
     /**
@@ -148,15 +184,63 @@ public class CommodityController {
      * @param id ID товара который будем удалять
      * @return Редирект на страницу со списком товаров
      */
-    @GetMapping("/deleteCommodity/{id}")
-    public String delete(@PathVariable long id) {
-        commodityService.delete(id);
-        return "redirect:/commodity";
+    @GetMapping(Routes.Commodity.DELETE)
+    public String delete(@PathVariable long id, final RedirectAttributes redirectAttributes) {
+        commodityService.delete(findOrFail(id));
+        redirectAttributes.addFlashAttribute(COMMODITY_FLASH_MSG_KEY, "Товар успешно снят с продажи");
+
+        return Routes.redirectToWithId(Routes.Commodity.SHOW, id);
     }
 
-    @GetMapping("/updateCommodity/{id}")
-    public String update(@ModelAttribute Commodity commodity) {
+    /**
+     * Страница для обновления товара
+     *
+     * @param id    ID модели которую надо загрузить
+     * @param model Класс для передачи данных в модель
+     * @return Имя страницы
+     */
+    @GetMapping(Routes.Commodity.UPDATE)
+    public String update(@PathVariable final long id, final Model model) {
+        model.addAttribute(COMMODITY_MODEL_ATTRIBUTE, findOrFail(id));
+
+        return "commodity/commodity_update";
+    }
+
+    /**
+     * Сохранение товара после изменения
+     *
+     * @param commodity     Модель товара
+     * @param bindingResult Результат валидации
+     * @param attributes    Аттрибуты редиректа
+     * @return Название роута на которую будем редиректиться
+     */
+    @PostMapping(Routes.Commodity.UPDATE_PROCESS)
+    public String update(@ModelAttribute(COMMODITY_MODEL_ATTRIBUTE) @Valid Commodity commodity,
+                         BindingResult bindingResult,
+                         RedirectAttributes attributes) {
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute(COMMODITY_FORM_ERRORS_NAME_FOR_REDIRECT, bindingResult);
+            attributes.addFlashAttribute(COMMODITY_MODEL_ATTRIBUTE, commodity);
+            return Routes.redirectToWithId(Routes.Commodity.UPDATE, commodity.getId());
+        }
+        attributes.addFlashAttribute(COMMODITY_FLASH_MSG_KEY, "Товар успешно обновлен");
         commodityService.update(commodity);
-        return "redirect:/commodity";
+
+        return Routes.redirectToWithId(Routes.Commodity.SHOW, commodity.getId());
+    }
+
+    /**
+     * Ищет товар по ID и если не находит, то бросает исключение о том, что
+     * ресурс не найден
+     *
+     * @param id ID товара который надо найти
+     * @return Найденный товар
+     */
+    private Commodity findOrFail(final long id) {
+        final Commodity commodity = commodityService.findOne(id);
+        if (commodity == null) {
+            throw new ResourceNotFoundException();
+        }
+        return commodity;
     }
 }

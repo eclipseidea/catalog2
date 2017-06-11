@@ -17,16 +17,20 @@ public class Orders_Commodity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Getter
     @Setter
     private int quantityProduct;
+
     @Getter
     @Setter
     private BigDecimal costOfCommodity;
+
     @Getter
     @Setter
     @ManyToOne
     private Orders orders;
+
     @Getter
     @Setter
     @ManyToOne

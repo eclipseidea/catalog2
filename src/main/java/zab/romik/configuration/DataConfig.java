@@ -98,10 +98,10 @@ public class DataConfig {
      * @param entityManagerFactory Фабрика для создания EntityManager JPA
      * @return Менеджер для работы с транзакциями
      */
-
     @Bean
     public JpaTransactionManager transactionManager(
             final EntityManagerFactory entityManagerFactory) {
+
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

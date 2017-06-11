@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -14,6 +15,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import zab.romik.formatters.CategoriesFormatter;
+import zab.romik.formatters.CountryFormatter;
 
 /**
  * TODO: Кодировку надо вынести в конфигурацию, если в конфиге не будет задано, то юзать UTF-8
@@ -35,9 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     /**
      * Кодировка шаблонов
-     *
-     * */
-
+     */
     private static final String ENCODING = "UTF-8";
 
     /**
@@ -126,5 +127,38 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public void setApplicationContext(final ApplicationContext applicationContext)
             throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    /**
+     * Создает форматтер категорий, оформлен как bean потому что
+     * там есть setter injection репозитория из которого нужно выбрать
+     * данные для внедрения сущности
+     *
+     * @return Форматтер категорий
+     */
+    @Bean
+    public CategoriesFormatter categoriesFormatter() {
+        return new CategoriesFormatter();
+    }
+
+    /**
+     * Здесь точно таже причина что и у {@link WebConfig#categoriesFormatter()}
+     *
+     * @return Форматтер поставщиков
+     */
+    @Bean
+    public CountryFormatter countryFormatter() {
+        return new CountryFormatter();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        super.addFormatters(registry);
+
+        registry.addFormatter(categoriesFormatter());
+        registry.addFormatter(countryFormatter());
     }
 }

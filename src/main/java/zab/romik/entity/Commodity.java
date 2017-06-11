@@ -4,14 +4,16 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import zab.romik.enums.CommodityGender;
-import zab.romik.forms.CommodityForm;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @ToString
 @EqualsAndHashCode
@@ -22,12 +24,19 @@ public class Commodity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    /**
+     * Название товара используемое для отображения
+     */
+    @NotEmpty
+    @Length(min = 3, max = 255)
     @Getter
     @Setter
     private String name;
+
     @Getter
     @Setter
-    private int age;
+    private int age = 3;
 
     /**
      * Рекомендуемый пол для покупателя товара
@@ -37,13 +46,22 @@ public class Commodity {
     @Enumerated(EnumType.STRING)
     private CommodityGender gender = CommodityGender.UNIVERSAL;
 
+    /**
+     * Цена товара
+     */
+    @NotNull
+    @Min(0)
     @Getter
     @Setter
     private BigDecimal price;
 
+    /**
+     * Количество товара
+     */
+    @Min(1)
     @Getter
     @Setter
-    private int quantity;
+    private int quantity = 10;
 
     @Getter
     @Setter
@@ -63,12 +81,21 @@ public class Commodity {
     @Getter
     @Setter
     @OneToOne
+    @NotNull
     private Categories categories;
 
     @Getter
     @Setter
     @OneToOne
+    @NotNull
     private Country country;
+
+    /**
+     * Статус удаленности товара, типа товар удален или нет
+     */
+    @Getter
+    @Setter
+    private boolean deleted;
 
     public Commodity() {
     }
@@ -77,27 +104,5 @@ public class Commodity {
         super();
         this.name = name;
         this.price = price;
-    }
-
-    /**
-     * Статический метод генерации (как рекомендуется в книге Effective Java),
-     * заполняет сущность Commodity из формы пользователя.
-     *
-     * @param form       Форма из которой будет заполняться сущность
-     * @param categories Категория которую надо заинжектить в товар
-     * @param countries  Страна поставщик
-     * @return Заполненная сущность
-     */
-    public static Commodity valueOf(final CommodityForm form, final Categories categories, Country countries) {
-        final Commodity commodity = new Commodity(form.getName(), form.getPrice());
-
-        commodity.setAge(form.getRecommendationAge());
-        commodity.setDescription(form.getDescription());
-        commodity.setQuantity(form.getQuantity());
-        commodity.setCategories(categories);
-        commodity.setGender(form.getGender());
-        commodity.setCountry(countries);
-
-        return commodity;
     }
 }
