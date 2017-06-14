@@ -57,7 +57,7 @@ public abstract class Routes {
     /**
      * Возвращает ссылку понятную спрингу для переадресации
      *
-     * @param routeName Имя маршрута для переадресачии
+     * @param routeName Имя маршрута для переадресации
      * @return Ссылка на переадрисацию
      */
     public static String redirectTo(final String routeName) {

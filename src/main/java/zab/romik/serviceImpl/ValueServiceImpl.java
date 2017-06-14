@@ -16,7 +16,7 @@ public class ValueServiceImpl implements ValueService {
     }
 
     @Override
-    public List<Categories> findAll() {
+    public List<Value> findAll() {
         // TODO Auto-generated method stub
         return null;
     }

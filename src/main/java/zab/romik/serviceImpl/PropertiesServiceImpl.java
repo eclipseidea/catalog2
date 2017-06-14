@@ -1,7 +1,6 @@
 package zab.romik.serviceImpl;
 
 import org.springframework.stereotype.Service;
-import zab.romik.entity.Categories;
 import zab.romik.service.PropertiesService;
 
 import java.util.List;
@@ -17,13 +16,13 @@ public class PropertiesServiceImpl implements PropertiesService {
     }
 
     @Override
-    public List<Categories> findAll() {
+    public List<Properties> findAll() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Categories findOne(long id) {
+    public Properties findOne(long id) {
         // TODO Auto-generated method stub
         return null;
     }

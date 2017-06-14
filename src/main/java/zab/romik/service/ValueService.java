@@ -9,7 +9,7 @@ public interface ValueService {
 
     void save(Value value);
 
-    List<Categories> findAll();
+    List<Value> findAll();
 
     Categories findOne(long id);
 
