@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import zab.romik.Routes;
 import zab.romik.service.PropertiesService;
 
 import java.util.Properties;
@@ -18,7 +19,7 @@ import static java.util.Objects.requireNonNull;
  * @since 0.0.1
  */
 @RestController
-@RequestMapping("/properties")
+@RequestMapping(Routes.Properties.PROPERTIES_LIST)
 public class Api {
 
     /**
@@ -42,7 +43,7 @@ public class Api {
      * @param id ID свойства
      * @return найденное свойство
      */
-    @GetMapping("/{id}/values")
+    @GetMapping(Routes.Properties.PROPERTY_VALUES)
     private Properties findById(@PathVariable("id") final long id) {
         return propertiesService.findOne(id);
     }

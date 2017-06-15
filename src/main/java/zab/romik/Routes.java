@@ -55,6 +55,23 @@ public abstract class Routes {
     }
 
     /**
+     * Роуты которые относятся к рест контроллеру свойств
+     */
+    public static class Properties {
+
+        /**
+         * Этот роут может служить как для выборки списка свойств так и как
+         * корневой маршрут ROOT Mapping
+         */
+        public static final String PROPERTIES_LIST = "/properties";
+
+        /**
+         * Роут для получения списка значений свойства
+         */
+        public static final String PROPERTY_VALUES = "/{id}/values";
+    }
+
+    /**
      * Возвращает ссылку понятную спрингу для переадресации
      *
      * @param routeName Имя маршрута для переадресации
