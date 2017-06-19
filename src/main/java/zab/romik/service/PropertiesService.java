@@ -1,7 +1,9 @@
 package zab.romik.service;
 
+import zab.romik.entity.Properties;
+
 import java.util.List;
-import java.util.Properties;
+
 
 public interface PropertiesService {
 
@@ -14,4 +16,6 @@ public interface PropertiesService {
     void delete(long id);
 
     void update(Properties properties);
+
+
 }

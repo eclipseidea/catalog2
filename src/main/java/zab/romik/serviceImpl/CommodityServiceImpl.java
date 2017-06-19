@@ -45,7 +45,6 @@ public class CommodityServiceImpl implements CommodityService {
      */
     public void delete(final Commodity commodity) {
         commodity.setDeleted(true);
-
         update(commodity);
     }
 

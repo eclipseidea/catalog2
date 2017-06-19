@@ -1,9 +1,11 @@
 package zab.romik.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Properties {
     private long id;
     @Getter
     @Setter
+    @JsonIgnore
     @OneToMany(mappedBy = "properties", cascade = CascadeType.REMOVE)
     private List<Value> value = new ArrayList<Value>();
     @Getter
