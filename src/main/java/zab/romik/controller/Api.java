@@ -49,7 +49,7 @@ public class Api {
     /**
      * Загружает свойство из базы данных по ID
      *
-     * @param id ID свойства
+     * @param id ID свойствo
      * @return найденное свойство
      */
     @GetMapping(Routes.Properties.PROPERTY_VALUES)
