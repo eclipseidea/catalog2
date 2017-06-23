@@ -7,6 +7,7 @@ import zab.romik.entity.Properties;
 import zab.romik.entity.Value;
 import zab.romik.exceptions.RestResourceNotFoundException;
 import zab.romik.service.PropertiesService;
+
 import zab.romik.service.ValueService;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import static java.util.Objects.requireNonNull;
  * динамических формы которые работают со свойствами
  *
  * @since 0.0.1
+ *
  */
 @RestController
 @RequestMapping(Routes.Properties.PROPERTIES_LIST)
