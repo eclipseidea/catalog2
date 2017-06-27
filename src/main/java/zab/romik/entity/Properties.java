@@ -24,7 +24,7 @@ public class Properties {
     @Setter
     @JsonIgnore
     @OneToMany(mappedBy = "properties", cascade = CascadeType.REMOVE)
-    private List<Value> value = new ArrayList<Value>();
+    private List<Value> value;
     @Getter
     @Setter
     private String title;

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import zab.romik.Routes;
 import zab.romik.entity.Properties;
 import zab.romik.entity.Value;
-import zab.romik.exceptions.RestResourceNotFoundException;
+import zab.romik.exceptions.ResourceNotFoundException;
 import zab.romik.service.PropertiesService;
 
 import zab.romik.service.ValueService;
@@ -56,7 +56,7 @@ public class Api {
     private List<Value> findById(@PathVariable("id") final long id) {
         Properties property = propertiesService.findOne(id);
         if (Objects.isNull(property)) {
-            throw new RestResourceNotFoundException();
+            throw new ResourceNotFoundException();
         }
         return property.getValue();
     }
